@@ -60,8 +60,8 @@ public class CodisClaus {
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, sKey);
             decryptedData = cipher.doFinal(data);
-        } catch (BadPaddingException bex){
-            System.out.println("Password incorrecto  ");
+//        } catch (BadPaddingException bex){
+//            System.out.println("Password incorrecto  ");
         } catch (Exception  ex) {
             System.out.println("Error xifrant les dades: " + ex);
         }

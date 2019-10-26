@@ -1,5 +1,6 @@
 package Dam_M_09.claus;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.SecretKey;
 import java.io.*;
 import java.util.Scanner;
