@@ -3,6 +3,8 @@ package Dam_M_09.claus;
 import javax.crypto.BadPaddingException;
 import javax.crypto.SecretKey;
 import java.io.*;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.Scanner;
 
 
@@ -38,7 +40,6 @@ public class Exercici_1 {
         byte[] decodificat = CodisClaus.decryptData(pass,encriptat);
         String textDecodificat = new String(decodificat,"UTF8");
         System.out.println("   " + textDecodificat);
-
         String dsad= passtext.getAlgorithm();
         String dsa = passtext.getFormat();
         System.out.println("\n  Codificat amb : " + dsad + "   Format:  " +dsa);
