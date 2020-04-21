@@ -10,6 +10,7 @@ public class MonitorarJugador implements Runnable {
 
     @Override
     public void run() {
+
         System.out.println(jugador.getNom() + " acumula: " + jugador.getPunts());
     }
 }

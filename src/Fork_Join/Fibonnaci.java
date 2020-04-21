@@ -37,26 +37,13 @@ public class Fibonnaci extends RecursiveTask {
 //        anterior2 = anterior1;
 //        anterior1 = anterior;
 
-        if( n < 2){
-           // anterior = n;
-            System.out.println("recursive mode : " + n);
-
-            return n;
-        }else{
-
-           // anterior = n;
-
-            recFibonnaci(n-1);
-
-            retornado = anterior + anterior1;
-            anterior1 = retornado;
-            anterior = anterior1;
-            anterior2 = n-1 + n-2;
-
-            System.out.println("recursive mode : " + retornado);
-            return n;
-        }
-
+//        if (n <= 1)  return (long) n;
+//        Fibonnaci f1 = new Fibonnaci(n - 1);
+//        f1.fork();
+//        Fibonnaci f2 = new Fibonnaci(n - 2);
+//        f2.fork();
+//        return f2.join() + f1.join();
+        return 0;
     }
 
     @Override
@@ -74,7 +61,7 @@ public class Fibonnaci extends RecursiveTask {
 
 
         ForkJoinPool pool = new ForkJoinPool();
-        Fibonnaci task1 = new Fibonnaci(10);
+        Fibonnaci task1 = new Fibonnaci(15);
         pool.invoke(task1);
          task1.join();
 

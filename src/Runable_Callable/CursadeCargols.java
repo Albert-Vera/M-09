@@ -27,7 +27,7 @@ public class CursadeCargols {
 
         // Esperem a que passin el 25s o né a que acabin tots
         try{
-            schExService.awaitTermination(25, TimeUnit.SECONDS);
+            schExService.awaitTermination(10, TimeUnit.SECONDS);
         }catch (InterruptedException e){
             e.printStackTrace();
         }

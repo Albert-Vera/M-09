@@ -11,7 +11,7 @@ public class Supermercat {
         ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
         int numClients = 9; int numCaixes = 4, productes = 5;
         List<Integer> preus = new ArrayList<>();
-        Runnable proces = null ;
+        Runnable proces  ;
 
         while ( numClients > 0) {
 
