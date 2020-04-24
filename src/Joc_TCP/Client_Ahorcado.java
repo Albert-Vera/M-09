@@ -7,6 +7,8 @@ import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,6 +18,7 @@ public class Client_Ahorcado extends Thread {
     int port;
     boolean continueConnected;
     int intents = 7;
+    List<String> charIntrouitsList = new ArrayList<>();
 
     public Client_Ahorcado(String hostname, int port) {
         this.hostname = hostname;
@@ -51,6 +54,18 @@ public class Client_Ahorcado extends Thread {
             System.out.println("Error de connexió indefinit: " + ex.getMessage());
         }
     }
+
+    /**
+     *  Aquest métode primer verifica la resposta del servidor, si el joc a acabat o no.
+     *  després llegeix la lletra introduida per l'usuari.
+     *  verifica si aquesta lletra ja havia sigut introduida anteriorment.
+     *  verifica que només introdueixi una lletra
+     *  verifica si la lletra es troba a la paraula secreta.
+     *
+     * @param serverData resposta que arriba del servidor
+     * @param paraulaSecreta paraula que s'ha d'adivinar
+     * @return retorna paraula completada amb lletras i guions en els llocs buits
+     */
     public String getRequest( String serverData, String paraulaSecreta) {
         String ret;
         String paraulaBusqueda = "";
@@ -63,12 +78,18 @@ public class Client_Ahorcado extends Thread {
             System.out.println("\n\n" +
                     "Et queden " + intents + " intents.");
             System.out.print("Pensa en una paraula de " + paraulaSecreta.length() + " lletras ");
-            System.out.print("\n\nIntrodueix una lletra: ");
+            System.out.print("\n\nIntrodueix una lletra: " );
             while (true) {
                 ret = in.next();
-                if (ret.length() == 1) break;
+                if ( charIntrouitsList.contains(ret)){
+                    System.out.println("Ja havies introduït aquesta lletra...");
+                    System.out.print("\n\nIntrodueix una altra lletra: " );
+                    intents --;
+                }
+                else    if (ret.length() == 1) break;
                 else System.out.print("Collons !!! te he dit una lletra !!!\n\nIntrodueix una lletra: ");
             }
+            charIntrouitsList.add(ret);
             if ( !comprovaEncert(ret, paraulaSecreta) ) intents--;
             a = ret.charAt(0);
             paraulaBusqueda = generarParaulaDeBusqueda(a, serverData);
@@ -77,8 +98,8 @@ public class Client_Ahorcado extends Thread {
     }
     void imprimirSortidaParaula(String serverData){
         if ( serverData.equals("Finito")) {
-            System.out.println("\nH a s  P e r d u t ");
-            System.out.print("\n  L a  P a r a u l a  e r a:   ");
+            System.out.println("\nH a s  P e r d u t !");
+            System.out.print("\nL a  P a r a u l a  e r a:   ");
             for (int i = 0; i < paraulaSecreta.length(); i++) {
                 System.out.print(paraulaSecreta.charAt(i) + " ");
             }
@@ -108,8 +129,8 @@ public class Client_Ahorcado extends Thread {
         }
         return false;
     }
+    // Aqui construeix una paraula amb las lletras introduidas o guions en els espais vacants
     public String generarParaulaDeBusqueda(char lletraEntran, String paraula){
-
         if (paraula.equalsIgnoreCase("Benvingut al joc!")){
             paraula = "";
             for (int i = 0; i < paraulaSecreta.length(); i++) {
@@ -119,10 +140,6 @@ public class Client_Ahorcado extends Thread {
             paraula = paraula.replace('-', lletraEntran);// les no coincidents les omple de guions
         }
         return paraula;
-    }
-    public boolean mustFinish(String dades) {
-        if (dades.equals("exit")) return false;
-        return true;
     }
     private void close(Socket socket){
         try {

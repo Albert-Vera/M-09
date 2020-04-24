@@ -38,7 +38,8 @@ public class Thread_Servidor_Ahorcado implements Runnable {
         }catch(IOException e){
             System.out.println(e.getLocalizedMessage());
         }
-        System.out.println("Aconseguit en " + (7 - Integer.parseInt(intentsJugador)) + " errors");
+        if ( msgSortint.equals("Finito")) System.out.println("No ho has aconseguit...");
+        else System.out.println("Aconseguit amb " + (7 - Integer.parseInt(intentsJugador)) + " errors " );
         try {
             clientSocket.close();
         } catch (IOException e) {
